@@ -17,15 +17,20 @@
     
     
 
-    <!-- Esse eh do template bootstrap5 que peguei na net, to na duvida se tiro o vite pq bootstrap eh meio manual .. -->
-    {{-- Custom CSS - Vitamina-Web-Admin é um modelo layout em bootstrap 5 (opensource) que foi obtido na web e encaixado manualmente neste projeto Laravel 10 --}}    
+    
+    {{-- Custom CSS - Vitamina-Web-Admin é um modelo layout em bootstrap 5 (opensource) que foi obtido na web e encaixado manualmente neste projeto Laravel 10. O estilo está dispnível em: --}}    
+    {{-- public/bootstrap, public/css, public/js, public/plugins, public/scss --}}
+    
     <link href="{{ asset('css/style.css') }}" rel="stylesheet"> 
 
 
 
-    <!-- Esse veio com o Laravel 10, quando baixei o laravel -->
-    <!-- Scripts -->
-     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <!-- Chamada Vite Comentada para inclusao do modelo de layout acima -->
+    <!-- Scripts -->    
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}  
+    
+    
 
 </head>
 <body>
@@ -88,30 +93,71 @@
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
                     <!-- ============================================================== -->
-                    <ul class="navbar-nav ms-auto d-flex align-items-center">
+                    <ul class="navbar-nav ms-auto d-flex justify-content-end">
 
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-                        <li class=" in">
-                            <form role="search" class="app-search d-none d-md-block me-3">
-                                <input type="text" placeholder="Search..." class="form-control mt-0">
-                                <a href="" class="active">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                            </form>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <li>
-                            <a class="profile-pic" href="#">
-                                <img src="plugins/images/users/varun.jpg" alt="user-img" width="36"
-                                    class="img-circle"><span class="text-white font-medium">Steave</span></a>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
+                        <div class="container">
+                            <a class="navbar-brand" href="{{ url('/') }}">
+                                {{ config('app.name', 'Vitamina Web Admin') }}
+                            </a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+            
+                            <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
+                                <!-- Left Side Of Navbar -->
+                                <ul class="navbar-nav me-auto">
+            
+                                </ul>
+            
+                                <!-- Right Side Of Navbar -->
+                                <ul class="navbar-nav ms-auto">
+
+                                    <!-- Nao Logado -->
+                                    @guest
+                                        @if (Route::has('login'))
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                            </li>
+                                        @endif
+            
+                                        @if (Route::has('register'))
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                            </li>
+                                        @endif
+
+                                    <!-- Logado -->    
+                                    @else
+                                        <li class="nav-item dropdown">
+                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                {{ Auth::user()->name }}
+                                            </a>
+            
+                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="background: #414755;">
+
+                                                <style>
+                                                    a.dropdown-item:hover{
+                                                        background: #414755 !important;
+                                                    }
+                                                </style>
+
+                                                <a class="dropdown-item text-center" href="{{ route('logout') }}" style="color: #fff !important;"
+                                                   onclick="event.preventDefault();
+                                                                 document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                                </a>
+            
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </div>
+                                        </li>
+                                    @endguest
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        
                     </ul>
                 </div>
             </nav>
@@ -127,13 +173,20 @@
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <!-- User Profile-->
+                    <ul id="sidebarnav">                        
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('home') }}"
+                                aria-expanded="false">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="hide-menu">Gerir Oportunidades</span>
+                            </a>
+                        </li>
+
                         <li class="sidebar-item pt-2">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
                                 aria-expanded="false">
                                 <i class="far fa-clock" aria-hidden="true"></i>
-                                <span class="hide-menu">Dashboard</span>
+                                <span class="hide-menu">Gerir Oportunidades</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -142,14 +195,7 @@
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 <span class="hide-menu">Profile</span>
                             </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="basic-table.html"
-                                aria-expanded="false">
-                                <i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="hide-menu">Basic Table</span>
-                            </a>
-                        </li>
+                        </li>                        
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="fontawesome.html"
                                 aria-expanded="false">
@@ -178,11 +224,7 @@
                                 <span class="hide-menu">Error 404</span>
                             </a>
                         </li>
-                        <li class="text-center p-20 upgrade-btn">
-                            <a href="https://www.wrappixel.com/templates/ampleadmin/"
-                                class="btn d-grid btn-danger text-white" target="_blank">
-                                Upgrade to Pro</a>
-                        </li>
+                        
                     </ul>
                 </nav>                
             </div>            
@@ -204,14 +246,14 @@
             {{-- =========================================================================== --}}
             <main class="py-4">
                 @yield('content')
-            </main>
+            </main>         
 
 
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a>
+            <footer class="footer text-center"> Vitamina Web Sistema Administrativo <a
+                    href="#">https://www.vitaminaweb.com.br</a>
             </footer>
             
 
@@ -219,73 +261,7 @@
         
     </div>
     
-
-
-
-
-
-
-
-    <!-- Layout que o laravel 10 gerou pra mim, com links de logout , register etc e que roda o yield content da view -->
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    
 
 
     {{-- ============================================================== --}}
@@ -314,6 +290,32 @@
     {{-- Custom JavaScript --}}
     <script src="{{ asset('js/custom.js') }}"></script> 
     {{-- ============================================================== --}}
+
+
+
+    {{-- ============================================================== --}}
+    {{-- Libs JQUERY: maskedinput e maskMoney --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"
+        integrity="sha512-d4KkQohk+HswGs6A1d6Gak6Bb9rMWtxjOa0IiY49Q3TeFd5xAzjWXDCBW9RS7m86FQ4RzM2BdHmdJnnKRYknxw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"
+        integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    {{-- Libs JQUERY: Calendário jQuery com Datepicker --}}    
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />    
+    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+
+
+    {{-- Libs JQUERY: select2 --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+
+    @stack('js-scripts')
 
 </body>
 </html>

@@ -19,4 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');    
+    Route::get('/autocompletevendedor', [App\Http\Controllers\HomeController::class, 'autocompletevendedor'])->name('autocompletevendedor');    
+
+});
+

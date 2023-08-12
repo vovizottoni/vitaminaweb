@@ -32,6 +32,15 @@ return new class extends Migration
 
 
         });
+
+
+
+        //Alimenta Cliente, Produto e User com dados fake (Factory)
+        //o comando php artisan db:seed foi adicionado aqui para fins de simpificacao para o avaliador
+        Artisan::call('db:seed');
+
+
+
     }
 
     /**
