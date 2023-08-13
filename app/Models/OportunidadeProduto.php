@@ -10,6 +10,7 @@ class OportunidadeProduto extends Model
     use HasFactory;
 
     public $table = 'oportunidadesprodutos';
+    public $timestamps = false; 
     
     protected $guarded = []; //Esta notação permite alteração de todos campos da tabela. Fillable para protecao..  
 

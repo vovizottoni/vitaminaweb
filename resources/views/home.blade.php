@@ -1,46 +1,58 @@
 @extends('layouts.vitamina-web-admin')
 
 @section('content')
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
+    
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
                 <h4 class="page-title">Pesquisar Oportunidades de Venda</h4>
             </div>
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <div class="d-md-flex">
-                    
-                </div>
-            </div>
+            
         </div>
 
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">              
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">                
-                <form action="{{ route('home') }}" method="get" class="d-flex" >
-                  
+        @if (session('success__'))
+            <br>
+            <div class="alert alert-success">
+                {{ session('success__') }} 
+            </div>
+        @endif
 
-                    
+        <nav class="navbar navbar-expand-lg mt-2">
+            <div class="justify-content-start">
+                <form action="{{ route('home') }}" method="get">
 
-                  {{-- SELECT2 para pesquisar vendedor (user_id) --}}                    
-                  <select class="form-control me-2 mr-3"  name="user_id" id="user_id" style="width: 550px;">  
-                    
-                    {{-- O valor escolhido e submetido via GET para vendedor (user_id) deve ser inicialmente selecionado. Para o Select2 V4, basta incluir o option selecionado abaixo  --}}                    
-                    @if ($request_has_user_id)
-                        <option value="{{ $request_has_user_id->id }}" selected="selected">{{ $request_has_user_id->name }}</option>    
-                    @endif                    
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12 col-xs-12 mb-sm-2 mb-xs-2 d-flex align-items-center">
+                            {{-- SELECT2 para pesquisar vendedor (user_id) --}}                    
+                            <select class="form-control"  name="user_id" id="user_id" >  
+                                
+                                {{-- O valor escolhido e submetido via GET para vendedor (user_id) deve ser inicialmente selecionado. Para o Select2 V4, basta incluir o option selecionado abaixo  --}}                    
+                                @if ($request_has_user_id)
+                                    <option value="{{ $request_has_user_id->id }}" selected="selected">{{ $request_has_user_id->name }}</option>    
+                                @endif                    
 
-                  </select>                  
+                            </select>                  
+                        </div>
+                        <div class="col-md-2  col-sm-12 col-xs-12  mb-sm-2 mb-xs-2 d-flex align-items-center">
+                            <input class="form-control" type="text" name="created_at_DE" id="created_at_DE" placeholder="De" aria-label="De" value="{{ request()->input('created_at_DE') }}">                  
+                        </div>
+                        <div class="col-md-2 col-sm-12 col-xs-12  mb-sm-2 mb-xs-2 d-flex align-items-center">
+                            <input class="form-control" type="text" name="created_at_ATE" id="created_at_ATE" placeholder="Até" aria-label="Até" value="{{ request()->input('created_at_ATE') }}">                  
+                        </div>
 
 
-                  <input class="form-control me-2 ml-3 mr-3" type="text" name="created_at_DE" id="created_at_DE" placeholder="De" aria-label="De" value="{{ request()->input('created_at_DE') }}">                  
-                  <input class="form-control me-2 mr-3" type="text" name="created_at_ATE" id="created_at_ATE" placeholder="Até" aria-label="Até" value="{{ request()->input('created_at_ATE') }}">                  
-                                                        
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-              </div>
+                        <div class="col-md-2  col-sm-12 col-xs-12  mb-sm-2 mb-xs-2 d-flex align-items-center">
+                            <button class="btn btn-outline-success" type="submit">Filtrar</button>
+                        </div>
+
+                        <div class="col-md-2  col-sm-12 col-xs-12  mb-sm-2 mb-xs-2 d-flex  justify-content-end"> 
+                            <a href="{{ route('oportunidade-create') }}" class="btn btn-success btn-sm text-white">Cadastrar Oportunidade</a>
+                        </div>
+
+                      </div>
+
+                </form>              
+                
             </div>
           </nav>
 
@@ -76,11 +88,18 @@
                                     @foreach ($oportunidades as $oportunidade)
                                         <tr>
                                             <th scope="row">{{$oportunidade->id}}</td>
-                                            <td>{{$oportunidade->cliente_id}}</td>
-                                            <td>{{$oportunidade->user_id}}</td>
+                                            <td>{{$oportunidade->cliente->nome }}</td>
+                                            <td>{{$oportunidade->user->name }}</td>  
                                             <td>{{ date('d/m/Y H:i:s', strtotime($oportunidade->created_at)) }}</td> 
                                             <td>{{$oportunidade->status}}</td>
-                                            <td><a class="btn btn-outline-success">btn1</a><a class="btn btn-outline-success">btn2</a></td>
+                                            <td>
+                                                @if ($oportunidade->status == 'pendente')
+                                                    <a class="btn btn-outline-info">Aprovar</a><a class="btn btn-outline-danger ml-1">Recusar</a>    
+                                                @else
+                                                    -
+                                                @endif
+                                                
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else

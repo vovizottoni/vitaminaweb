@@ -25,7 +25,15 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');    
-    Route::get('/autocompletevendedor', [App\Http\Controllers\HomeController::class, 'autocompletevendedor'])->name('autocompletevendedor');    
+    Route::get('/oportunidade/create', [App\Http\Controllers\HomeController::class, 'create'])->name('oportunidade-create');    
+    Route::post('/oportunidade/store', [App\Http\Controllers\HomeController::class, 'store'])->name('oportunidade-store');    
+
+
+
+    Route::get('/autocompletevendedor', [App\Http\Controllers\HomeController::class, 'autocompletevendedor'])->name('autocompletevendedor');     
+    Route::get('/autocompletecliente', [App\Http\Controllers\HomeController::class, 'autocompletecliente'])->name('autocompletecliente'); 
+    Route::get('/autocompleteprodutos', [App\Http\Controllers\HomeController::class, 'autocompleteprodutos'])->name('autocompleteprodutos'); 
+    
 
 });
 

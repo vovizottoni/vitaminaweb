@@ -67,13 +67,13 @@
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!-- Dark Logo icon -->
-                            <img src="plugins/images/logo-icon.png" alt="homepage" />
+                            <img src="{{ asset('plugins/images/logo-icon.png') }}" alt="homepage" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="plugins/images/logo-text.png" alt="homepage" />
+                            <img src="{{ asset('plugins/images/logo-text.png') }}" alt="homepage" /> 
                         </span>
                     </a>
                     <!-- ============================================================== -->
@@ -252,9 +252,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center"> Vitamina Web Sistema Administrativo <a
-                    href="#">https://www.vitaminaweb.com.br</a>
-            </footer>
+            <footer class="footer text-center">Vitamina Web - Sistema Administrativo</footer>
             
 
         </div>
