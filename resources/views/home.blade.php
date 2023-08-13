@@ -94,7 +94,7 @@
                                             <td>{{$oportunidade->status}}</td>
                                             <td>
                                                 @if ($oportunidade->status == 'pendente')
-                                                    <a class="btn btn-outline-info">Aprovar</a><a class="btn btn-outline-danger ml-1">Recusar</a>    
+                                                    <a class="btn btn-outline-info" onclick="return confirm('Deseja realmente aprovar este item?')"  href="{{ route('oportunidade-aprove', $oportunidade->id) }}"  >Aprovar</a><a class="btn btn-outline-danger ml-1" onclick="return confirm('Deseja realmente recusar este item?')"  href="{{ route('oportunidade-refuse', $oportunidade->id) }}"  >Recusar</a>    
                                                 @else
                                                     -
                                                 @endif
@@ -143,7 +143,7 @@
 
         $(document).ready(function() {                       
 
-            $('#created_at_DE').datepicker({            
+            $('#created_at_DE').mask('99/99/9999').datepicker({            
                 dateFormat: 'dd/mm/yy',                
                 dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
                 dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
@@ -152,7 +152,7 @@
                 monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
             }); 
 
-            $('#created_at_ATE').datepicker({            
+            $('#created_at_ATE').mask('99/99/9999').datepicker({                     
                 dateFormat: 'dd/mm/yy',                
                 dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
                 dayNamesMin: ['D','S','T','Q','Q','S','S','D'],

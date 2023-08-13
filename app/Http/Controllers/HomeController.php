@@ -143,6 +143,41 @@ class HomeController extends Controller
     }
 
 
+    public function aprove($id){
+
+        //OBS 1
+        //Vendedor Logado pode aprovar qualquer oportunidade (dele e de outros vendedores).  Numa situacao Real, poderia colocar regra de seguranca p/ evitar isso (interferir em oportunidades de outro vendedor).
+
+        //OBS 2
+        //Numa situacao real, este método poderia ser acionado via AJAX p/ não perder a paginacao corrente da tela de pesquisa (index).
+
+        
+        Oportunidade::where([['id', '=', $id]])->update(['status' => 'aprovada']);
+
+        //redireciona com flash Message
+        return redirect()->route('home')->with('success__', 'Registro aprovado com sucesso!'); 
+
+    }
+
+
+    public function refuse($id){
+
+        
+        //OBS 1
+        //Vendedor Logado pode reprovar qualquer oportunidade (dele e de outros vendedores).  Numa situacao Real, poderia colocar regra de seguranca p/ evitar isso (interferir em oportunidades de outro vendedor).
+
+        //OBS 2
+        //Numa situacao real, este método poderia ser acionado via AJAX p/ não perder a paginacao corrente da tela de pesquisa (index).
+        
+
+        Oportunidade::where([['id', '=', $id]])->update(['status' => 'recusada']);
+
+        //redireciona com flash Message
+        return redirect()->route('home')->with('success__', 'Registro recusado com sucesso!');  
+
+
+    }
+
     
     public function autocompletevendedor(Request $request){
         $data = [];

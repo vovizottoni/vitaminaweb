@@ -26,8 +26,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');    
     Route::get('/oportunidade/create', [App\Http\Controllers\HomeController::class, 'create'])->name('oportunidade-create');    
-    Route::post('/oportunidade/store', [App\Http\Controllers\HomeController::class, 'store'])->name('oportunidade-store');    
-
+    Route::post('/oportunidade/store', [App\Http\Controllers\HomeController::class, 'store'])->name('oportunidade-store');
+    Route::get('/oportunidade/aprove/{id}', [App\Http\Controllers\HomeController::class, 'aprove'])->name('oportunidade-aprove');    
+    Route::get('/oportunidade/refuse/{id}', [App\Http\Controllers\HomeController::class, 'refuse'])->name('oportunidade-refuse');    
 
 
     Route::get('/autocompletevendedor', [App\Http\Controllers\HomeController::class, 'autocompletevendedor'])->name('autocompletevendedor');     
